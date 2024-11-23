@@ -13,7 +13,7 @@ import java.io.OutputStreamWriter
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var editText: EditText
+    private lateinit var editText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
