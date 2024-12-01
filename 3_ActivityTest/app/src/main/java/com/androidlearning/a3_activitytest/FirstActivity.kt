@@ -2,25 +2,27 @@ package com.androidlearning.a3_activitytest
 
 import android.app.Activity
 import android.app.ComponentCaller
-import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import java.net.URL
+import com.androidlearning.a3_activitytest.BestActivityPrectice.BaseActivity
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        Log.d("FirstActivity-s", "Task id is $taskId")
+
         setContentView(R.layout.first_layout)
 
         val button1: Button = findViewById(R.id.button1)
@@ -51,6 +53,7 @@ class FirstActivity : AppCompatActivity() {
 
             // 显示 Intent
             // val intent: Intent = Intent(this, SecondActivity::class.java)
+            // startActivity(intent)
 
             // 隐式 Intent
             // val intent: Intent = Intent("com.androidlearning.a3_activitytest.ACTION_START")
@@ -75,11 +78,22 @@ class FirstActivity : AppCompatActivity() {
             // intent.putExtra("扩展数据", data)
             // startActivity(intent)
 
-            val data = "你好，第二个 Activity"
-            val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra("扩展数据", data)
-            resultLauncher.launch(intent)
+            // val data = "你好，第二个 Activity"
+            // val intent = Intent(this, SecondActivity::class.java)
+            // intent.putExtra("扩展数据", data)
+            // resultLauncher.launch(intent)
 
+            /**
+             * 启动模式测试
+             */
+            val intent: Intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+
+
+            /**
+             * 最佳实践
+             */
+            SecondActivity.actionStart(this, "data1", "data2")
         }
     }
 
