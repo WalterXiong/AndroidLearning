@@ -9,3 +9,5 @@
 .cxx
 local.properties
 /app/.gitignore
+/app/src/androidTest
+/app/src/test
