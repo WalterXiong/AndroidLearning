@@ -3,6 +3,7 @@ package com.androidlearning.listviewtest
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,14 +31,20 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val listView = findViewById<ListView>(R.id.listView)
+        val listView: ListView = findViewById(R.id.listView)
 
         // val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         // listView.adapter = adapter
 
         initFruits()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, fruitList)
+        val adapter = FruitAdapter(this, R.layout.fruit_item, fruitList)
         listView.adapter = adapter
+
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val fruit = fruitList.get(position)
+            Toast.makeText(this, "你点击的是：${fruit.name}", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
