@@ -16,11 +16,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private val msgList = ArrayList<MsgEntity>()
 
-    private var adapter: MsgAdapter? = null
+    private lateinit var adapter: MsgAdapter
 
-    private var inputText: EditText? = null
+    private lateinit var inputText: EditText
 
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,20 +34,26 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         initMsg()
 
-        inputText = findViewById(R.id.inputText)
-        recyclerView = findViewById(R.id.recyclerView)
+        if (!::inputText.isInitialized) {
+            inputText = findViewById(R.id.inputText)
+        }
+
+        if (!::recyclerView.isInitialized) {
+            recyclerView = findViewById(R.id.recyclerView)
+        }
+
         val sendButton = findViewById<Button>(R.id.send)
+        sendButton.setOnClickListener(this)
 
         val layoutManager = LinearLayoutManager(this)
 
-        adapter = MsgAdapter(msgList)
+        recyclerView.layoutManager = layoutManager
 
-        recyclerView?.let {
-            it.layoutManager = layoutManager
-            it.adapter = adapter
+        if (!::adapter.isInitialized) {
+            adapter = MsgAdapter(msgList)
         }
 
-        sendButton.setOnClickListener(this)
+        recyclerView.adapter = adapter
     }
 
     override fun onClick(v: View?) {
@@ -56,19 +62,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             when (it.id) {
                 R.id.send -> {
 
-                    val content = inputText?.text.toString()
+                    val content = inputText.text.toString()
                     if (content.isNotEmpty()) {
                         val msg = MsgEntity(content, MsgEntity.TYPE_SENT)
                         msgList.add(msg)
 
                         // 当有新消息时，刷新RecyclerView中的显示 ( 下标 )
-                        adapter?.notifyItemInserted(msgList.size - 1)
+                        adapter.notifyItemInserted(msgList.size - 1)
 
                         // 将RecyclerView 定位到最后一行 ( 下标 )
-                        recyclerView?.scrollToPosition(msgList.size - 1)
+                        recyclerView.scrollToPosition(msgList.size - 1)
 
                         // 初始化输入框
-                        inputText?.setText("")
+                        inputText.setText("")
                     }
                 }
             }
