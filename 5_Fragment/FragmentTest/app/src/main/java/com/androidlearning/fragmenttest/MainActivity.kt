@@ -21,15 +21,19 @@ class MainActivity : AppCompatActivity() {
 
         val button: Button = findViewById(R.id.button)
         button.setOnClickListener {
-            replaceFragment(AnotherRightFragment())
+            // replaceFragment(AnotherRightFragment())
         }
 
-        replaceFragment(RightFragment())
+        // replaceFragment(RightFragment())
+
+
+        val leftFragment = supportFragmentManager.findFragmentById(R.id.leftFragment)
+
 
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        // 获取 fragment 管理器
+        /*// 获取 fragment 管理器
         val fragmentManager = supportFragmentManager
         // 开启事务
         val transaction = fragmentManager.beginTransaction()
@@ -38,6 +42,6 @@ class MainActivity : AppCompatActivity() {
         // 将该 fragment 添加到返回栈中
         transaction.addToBackStack(null)
         // 提交事务
-        transaction.commit()
+        transaction.commit()*/
     }
 }

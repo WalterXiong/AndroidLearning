@@ -14,17 +14,11 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/rightFragment"-->
-    <!--        android:name="com.androidlearning.fragmenttest.RightFragment"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_weight="1" />-->
-
-    <!--<FrameLayout
-        android:id="@+id/rightLayout"
+    <fragment
+        android:id="@+id/rightFragment"
+        android:name="com.androidlearning.fragmenttest.RightFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />-->
+        android:layout_weight="3" />
 
 </LinearLayout>
