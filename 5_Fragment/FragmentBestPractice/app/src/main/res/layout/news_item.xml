@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- android:padding：表示给控件周围加上补白 -->
+<!-- android:maxLines设置为1表示让这个TextView只能单行显示 -->
+<!-- android:ellipsize用于设定当文本内容超出控件宽度时文本的缩略方式，这里指定成end 表示在尾部进行缩略 -->
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newsTitle_in_recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingLeft="10dp"
+    android:paddingTop="15dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="15dp"
+    android:textSize="18sp" />
