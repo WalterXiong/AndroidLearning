@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,27 +23,10 @@ class NewsTitleFragment : Fragment() {
         return inflater.inflate(R.layout.news_title_fragment, container, false)
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        activity?.let {
-//            val mainActivity = it as MainActivity
-//            isTowPane = mainActivity.findViewById<FrameLayout>(R.id.newsContentLayout) != null
-//        }
-//
-//        val newsTitleRecyclerView: RecyclerView = view.findViewById(R.id.newsTitleRecyclerView)
-//
-//        val layoutManager = LinearLayoutManager(activity)
-//
-//        newsTitleRecyclerView.layoutManager = layoutManager
-//
-//        val adapter = NewsAdapter(getNews())
-//
-//        newsTitleRecyclerView.adapter = adapter
-//    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+
         activity?.let {
             val mainActivity = it as MainActivity
             isTowPane = mainActivity.findViewById<FrameLayout>(R.id.newsContentLayout) != null
@@ -59,9 +43,7 @@ class NewsTitleFragment : Fragment() {
             newsTitleRecyclerView.adapter = adapter
         }
 
-
     }
-
 
     private fun getNews(): List<News> {
 
