@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         /**
          * 动态注册广播
          */
-        // val intentFilter = IntentFilter()
-        // intentFilter.addAction("android.intent.action.TIME_TICK")
-        // timeChangeReceiver = TimeChangeReceiver()
-        // registerReceiver(timeChangeReceiver, intentFilter)
+         /*val intentFilter = IntentFilter()
+         intentFilter.addAction("android.intent.action.TIME_TICK")
+         timeChangeReceiver = TimeChangeReceiver()
+         registerReceiver(timeChangeReceiver, intentFilter)*/
 
 
         /**
