@@ -5,16 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 
-class MyBroadcastReceiver : BroadcastReceiver() {
+class AnotherBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Toast.makeText(
-            context, "在我的广播接收器中收到广播",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        // 截断有序广播
-        abortBroadcast()
-
+        Toast.makeText(context, "在另一个广播接收器收到广播", Toast.LENGTH_SHORT).show()
     }
 }

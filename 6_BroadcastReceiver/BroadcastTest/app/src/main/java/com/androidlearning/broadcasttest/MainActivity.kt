@@ -13,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var timeChangeReceiver: TimeChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +44,10 @@ class MainActivity : AppCompatActivity() {
             intent.setPackage(packageName)
 
             // 发送标准广播
-            sendBroadcast(intent)
+            // sendBroadcast(intent)
+
+            // 发送有序广播
+            sendOrderedBroadcast(intent, null)
         }
 
     }
