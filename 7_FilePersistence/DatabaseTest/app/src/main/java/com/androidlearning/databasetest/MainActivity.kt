@@ -28,5 +28,7 @@ class MainActivity : AppCompatActivity() {
         createDatabase.setOnClickListener {
             myDatabaseHelper.writableDatabase
         }
+
+        // TODO CRUD 操作
     }
 }
