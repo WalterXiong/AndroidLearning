@@ -29,16 +29,22 @@ class MyDatabaseHelper(val context: Context, val name: String, val version: Int)
      */
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createBook)
+        Toast.makeText(context, "Book 表创建成功", Toast.LENGTH_SHORT).show()
         db?.execSQL(createCategory)
-        Toast.makeText(context, "创建成功", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Category 表创建成功", Toast.LENGTH_SHORT).show()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.let {
-            it.execSQL("drop table if exists Book")
-            it.execSQL("drop table if exists Category")
-            onCreate(db)
-        }
 
+        db?.let {
+
+            if (oldVersion <= 1) {
+                db.execSQL(createCategory)
+            }
+
+            if (oldVersion <= 2) {
+                db.execSQL("alter table Book add column category_id integer")
+            }
+        }
     }
 }

@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val deleteData: Button = findViewById(R.id.deleteData)
         val updateData: Button = findViewById(R.id.updateData)
         val queryData: Button = findViewById(R.id.queryData)
+        val replaceData: Button = findViewById(R.id.replaceData)
 
         // 添加数据
         addData.setOnClickListener {
@@ -96,6 +97,34 @@ class MainActivity : AppCompatActivity() {
             cursor.close()
 
             Toast.makeText(this, "查询成功", Toast.LENGTH_SHORT).show()
+        }
+
+        /**
+         * 使用事务
+         */
+        replaceData.setOnClickListener {
+            val db = dbHelper.writableDatabase
+            db.beginTransaction()
+
+            try {
+                db.delete("Book", null, null)
+                if (true) {
+                    // 手动抛出异常
+                    throw NullPointerException()
+                }
+                val value = ContentValues().apply {
+                    put("name", "Xiaomi SU7")
+                    put("author", "Lei Jun")
+                    put("pages", 720)
+                    put("price", 20.59)
+                }
+                db.insert("Book", null, value)
+                db.setTransactionSuccessful()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                db.endTransaction()
+            }
         }
     }
 }
