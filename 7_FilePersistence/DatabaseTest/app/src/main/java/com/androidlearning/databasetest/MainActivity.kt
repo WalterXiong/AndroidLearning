@@ -1,6 +1,5 @@
 package com.androidlearning.databasetest
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.androidlearning.databasetest.higherorderfunctions_application.cvOf
+import com.androidlearning.databasetest.higherorderfunctions_application.open
 
 class MainActivity : AppCompatActivity() {
 
@@ -126,5 +127,17 @@ class MainActivity : AppCompatActivity() {
                 db.endTransaction()
             }
         }
+
+
+        // =========================================================================================
+
+        /**
+         *  高阶函数应用
+         */
+        getSharedPreferences("data", MODE_PRIVATE).open {
+
+        }
+
+        val value1 = cvOf("name" to "xiongjun")
     }
 }
