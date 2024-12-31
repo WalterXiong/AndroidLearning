@@ -3,7 +3,6 @@ package com.androidlearning.databasetest
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.widget.Toast
 
 class MyDatabaseHelper(val context: Context, val name: String, val version: Int) :
     SQLiteOpenHelper(context, name, null, version) {
@@ -29,9 +28,9 @@ class MyDatabaseHelper(val context: Context, val name: String, val version: Int)
      */
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createBook)
-        Toast.makeText(context, "Book 表创建成功", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(context, "Book 表创建成功", Toast.LENGTH_SHORT).show()
         db?.execSQL(createCategory)
-        Toast.makeText(context, "Category 表创建成功", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(context, "Category 表创建成功", Toast.LENGTH_SHORT).show()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
