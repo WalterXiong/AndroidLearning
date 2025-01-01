@@ -17,8 +17,9 @@
             android:name=".DatabaseContentProvider"
             android:authorities="com.androidlearning.databasetest.provider"
             android:enabled="true"
-            android:exported="true"
-            tools:ignore="ExportedContentProvider" />
+            android:exported="true">
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
 
         <activity
             android:name=".MainActivity"

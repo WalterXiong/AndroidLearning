@@ -47,10 +47,10 @@ class DatabaseContentProvider : ContentProvider() {
         } ?: 0
 
     override fun getType(uri: Uri) = when (uriMatcher.match(uri)) {
-        bookDir -> "vnd.android.cursor.dir/vnd.com.androidlearning.databasetest.provider.book"
-        bookItem -> "vnd.android.cursor.item/vnd.com.androidlearning.databasetest.provider.book"
-        categoryDir -> "vnd.android.cursor.dir/vnd.com.androidlearning.databasetest.provider.category"
-        categoryItem -> "vnd.android.cursor.item/vnd.com.androidlearning.databasetest.provider.category"
+        bookDir -> "vnd.android.cursor.dir/vnd.$authority.book"
+        bookItem -> "vnd.android.cursor.item/vnd.$authority.book"
+        categoryDir -> "vnd.android.cursor.dir/vnd.$authority.category"
+        categoryItem -> "vnd.android.cursor.item/vnd.$authority.category"
         else -> null
     }
 
