@@ -2,7 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--
+        Android 11更改了应用查询已安装的其它应用以及与之交互的方式
+            - 官方说明: https://developer.android.google.cn/about/versions/11/privacy/package-visibility
+            - 使用 <queries> 元素定义可访问的其它软件包，可以按软件包名称、intent或提供程序授权指定的软件包，也就是说需要在配置文件中声明要访问的App
+        针对ContentProvider的Unknown Uri错误，在AndroidManifest.xml中的 <queries>元素中添加<provider>
+     -->
+    <queries>
+
+        <!-- 通过包名声明访问 -->
+        <package android:name="com.example.otherapp" />
+        <!-- 通过Intent声明访问 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="com.example.otherapp.provider"
+                android:scheme="content" />
+        </intent>
+
+        <!-- 通过ContentProvider声明访问 -->
+        <provider android:authorities="com.androidlearning.databasetest.provider" />
+    </queries>
 
     <application
         android:allowBackup="true"
