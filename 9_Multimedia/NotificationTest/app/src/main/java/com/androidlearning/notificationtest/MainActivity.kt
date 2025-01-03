@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -34,20 +35,36 @@ class MainActivity : AppCompatActivity() {
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
 
-        sendNotice.setOnClickListener {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val channel = NotificationChannel(
                 "normal", "Normal", NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(channel)
 
+            val channel2 = NotificationChannel(
+                "important", "Important", NotificationManager.IMPORTANCE_HIGH
+            )
+            manager.createNotificationChannel(channel2)
+        }
+
+        sendNotice.setOnClickListener {
+
+
             val intent = Intent(this, NotificationActivity::class.java)
 
             val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-            val notification = NotificationCompat.Builder(this, "normal")
+            val notification = NotificationCompat.Builder(this, "important")
                 .setContentTitle("这是通知标题")
-                .setContentText("这是通知内容")
+                // .setContentText(
+                // """
+                // 这是通知内容，Learn how to build notifications, send and sync data,
+                // and use voice actions.Get the official Android IDE and developer tools to
+                // build apps for Android.
+                // """.trimIndent()
+                // )
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setLargeIcon(
                     BitmapFactory.decodeResource(
@@ -57,6 +74,21 @@ class MainActivity : AppCompatActivity() {
                 )
                 .setContentIntent(pi)
                 .setAutoCancel(true)
+                .setStyle(
+                    // 设置长文本
+                    /*NotificationCompat.BigTextStyle().bigText(
+                        """
+                         这是通知内容，Learn how to build notifications, send and sync data,
+                         and use voice actions.Get the official Android IDE and developer tools to
+                         build apps for Android.
+                         """.trimIndent()
+                    )*/
+
+                    // 设置大图片
+                    NotificationCompat.BigPictureStyle().bigPicture(
+                        BitmapFactory.decodeResource(resources, R.drawable.miku)
+                    )
+                )
                 .build()
 
             manager.notify(1, notification)
