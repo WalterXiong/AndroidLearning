@@ -65,11 +65,11 @@ class MainActivity : AppCompatActivity() {
                 // build apps for Android.
                 // """.trimIndent()
                 // )
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.small_icon)
                 .setLargeIcon(
                     BitmapFactory.decodeResource(
                         resources,
-                        R.drawable.ic_launcher_foreground
+                        R.drawable.large_icon
                     )
                 )
                 .setContentIntent(pi)
