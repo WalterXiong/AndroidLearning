@@ -1,6 +1,7 @@
 package com.androidlearning.servicetest
 
 import android.content.ComponentName
+import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         starServiceBtn.setOnClickListener {
             val intent = Intent(this, MyService::class.java)
             startService(intent)
+
+            // 使用泛型实化简化启动 service
+            startServicePro<MyService>()
         }
 
         stopServiceBtn.setOnClickListener {
@@ -89,5 +93,10 @@ class MainActivity : AppCompatActivity() {
             startService(intent)
         }
 
+    }
+
+    inline fun <reified T> startServicePro() {
+        val intent = Intent(this, T::class.java)
+        startService(intent)
     }
 }
