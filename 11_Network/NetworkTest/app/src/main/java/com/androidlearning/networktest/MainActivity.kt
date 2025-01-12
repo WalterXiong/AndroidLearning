@@ -4,26 +4,39 @@ import android.R.attr.name
 import android.R.attr.version
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.androidlearning.networktest.callback.HttpCallbackListener
+import com.androidlearning.networktest.callback.HttpUtil
+import com.androidlearning.networktest.parse_json.App
+import com.androidlearning.networktest.parse_xml.ContentHandler
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
 import org.xml.sax.InputSource
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.BufferedReader
 import java.io.DataOutputStream
+import java.io.IOException
 import java.io.InputStreamReader
 import java.io.StringReader
 import java.net.HttpURLConnection
 import java.net.URL
 import javax.xml.parsers.SAXParserFactory
 import kotlin.concurrent.thread
+import kotlin.jvm.java
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,6 +81,31 @@ class MainActivity : AppCompatActivity() {
 
 
         // // // connection.disconnect()
+
+
+        /**
+         * 回调
+         */
+        HttpUtil.sendHttpRequest("www.bilibili.com", object : HttpCallbackListener {
+            override fun onFinish(response: String) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError(e: Exception) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        HttpUtil.sendHttpRequest("www.baidu.com", object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     fun httpOkOperation() {
@@ -111,13 +149,18 @@ class MainActivity : AppCompatActivity() {
                 val client = OkHttpClient()
 
                 var request = Request.Builder()
-                    .url("http://192.168.31.125/get_data.xml")
+                    // xml
+                    // .url("http://192.168.31.125/get_data.xml")
+                    // json
+                    .url("http://192.168.31.125/get_data.json")
                     .build()
 
                 val response = client.newCall(request).execute()
                 var responseData = response.body?.string()
                 if (null != responseData) {
-                    parseXMLWithSAX(responseData)
+                    // parseXMLWithSAX(responseData)
+                    // parseJSONWithJSONObject(responseData)
+                    parseJSONWithGSON(responseData)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -126,6 +169,46 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // ================================ JSON 解析 ===================================================
+    private fun parseJSONWithJSONObject(jsonData: String) {
+        try {
+            val jsonArray = JSONArray(jsonData)
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val id = jsonObject.get("id")
+                val name = jsonObject.get("name")
+                val version = jsonObject.get("version")
+                Log.d("MainActivity", "id is $id")
+                Log.d("MainActivity", "name is $name")
+                Log.d("MainActivity", "version is $version")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun parseJSONWithGSON(jsonData: String) {
+        try {
+            val gson = Gson()
+            val typeOf = object : TypeToken<List<App>>() {}.type
+            val appList = gson.fromJson<List<App>>(jsonData, typeOf)
+            for (app in appList) {
+                Log.d("MainActivity", "id is ${app.id}")
+                Log.d("MainActivity", "name is ${app.name}")
+                Log.d("MainActivity", "version is ${app.version}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    // ================================ JSON 解析 ===================================================
+
+
+    // ================================ XML 解析 ====================================================
+
+    /**
+     * SAX 解析 XML
+     */
     private fun parseXMLWithSAX(xmlData: String) {
         try {
 
@@ -145,7 +228,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * XML 解析
+     * pull XML 解析
      */
     private fun parseXMLWithPull(xmlData: String) {
 
@@ -192,8 +275,8 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
+    // ================================ XML 解析 ====================================================
 
     fun postParamsWithHttpURLConnection() {
         thread {

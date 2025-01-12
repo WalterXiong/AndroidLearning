@@ -1,4 +1,4 @@
-package com.androidlearning.networktest
+package com.androidlearning.networktest.parse_xml
 
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler

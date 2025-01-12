@@ -1,4 +1,4 @@
-package com.androidlearning.networktest
+package com.androidlearning.networktest.parse_xml
 
 import android.util.Log
 import org.xml.sax.Attributes
