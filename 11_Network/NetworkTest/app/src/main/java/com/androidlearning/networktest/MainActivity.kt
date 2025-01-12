@@ -139,6 +139,7 @@ class MainActivity : AppCompatActivity() {
             var name = ""
             var version = ""
 
+            val sb = StringBuilder()
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 var nodeName = xmlPullParser.name
                 when (eventType) {
@@ -146,13 +147,17 @@ class MainActivity : AppCompatActivity() {
 
                         when (nodeName) {
                             "id" -> id = xmlPullParser.nextText()
-                            "name" -> id = xmlPullParser.nextText()
-                            "version" -> id = xmlPullParser.nextText()
+                            "name" -> name = xmlPullParser.nextText()
+                            "version" -> version = xmlPullParser.nextText()
                         }
                     }
 
                     XmlPullParser.END_TAG -> {
                         if ("app" == nodeName) {
+                            sb.append("id       is $id\n")
+                            sb.append("name     is $name\n")
+                            sb.append("version  is $version\n")
+                            sb.append("===================\n")
                             Log.d("MainActivity", "id is $id")
                             Log.d("MainActivity", "name is $name")
                             Log.d("MainActivity", "version is $version")
@@ -161,6 +166,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 eventType = xmlPullParser.next()
             }
+            showResponse(sb.toString())
         } catch (e: Exception) {
             e.printStackTrace()
         }
