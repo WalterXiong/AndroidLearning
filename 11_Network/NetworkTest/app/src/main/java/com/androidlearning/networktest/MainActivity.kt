@@ -1,5 +1,7 @@
 package com.androidlearning.networktest
 
+import android.R.attr.name
+import android.R.attr.version
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.xml.sax.InputSource
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.BufferedReader
@@ -19,6 +22,7 @@ import java.io.InputStreamReader
 import java.io.StringReader
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.xml.parsers.SAXParserFactory
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -113,13 +117,31 @@ class MainActivity : AppCompatActivity() {
                 val response = client.newCall(request).execute()
                 var responseData = response.body?.string()
                 if (null != responseData) {
-                    parseXMLWithPull(responseData)
+                    parseXMLWithSAX(responseData)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
         }
+    }
+
+    private fun parseXMLWithSAX(xmlData: String) {
+        try {
+
+            val factory = SAXParserFactory.newInstance()
+            val xmlReader = factory.newSAXParser().xmlReader
+            val handler = ContentHandler()
+
+            // 将 handle 放到 xmlReader 中
+            xmlReader.contentHandler = handler
+            // 开始解析
+            xmlReader.parse(InputSource(StringReader(xmlData)))
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     /**
