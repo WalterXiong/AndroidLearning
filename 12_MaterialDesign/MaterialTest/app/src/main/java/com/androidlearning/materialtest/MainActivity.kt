@@ -1,5 +1,6 @@
 package com.androidlearning.materialtest
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,10 +12,30 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+
+    val fruits = mutableListOf(
+        Fruit("Apple", R.drawable.apple),
+        Fruit("Banana", R.drawable.banana),
+        Fruit("Orange", R.drawable.orange),
+        Fruit("Watermelon", R.drawable.watermelon),
+        Fruit("Pear", R.drawable.pear),
+        Fruit("Grape", R.drawable.grape),
+        Fruit("Pineapple", R.drawable.pineapple),
+        Fruit("Strawberry", R.drawable.strawberry),
+        Fruit("Cherry", R.drawable.cherry),
+        Fruit("Mango", R.drawable.mango)
+    )
+
+    val fruitList = ArrayList<Fruit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +55,32 @@ class MainActivity : AppCompatActivity() {
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
+
+        val navView = findViewById<NavigationView>(R.id.navView)
+        navView.setCheckedItem(R.id.navCall)
+        navView.setNavigationItemSelectedListener {
+            drawerLayout.closeDrawers()
+
+            Toast.makeText(this, "你点击了 navView", Toast.LENGTH_SHORT).show()
+
+            true
+        }
+
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+
+            Snackbar.make(view, "数据删除", Snackbar.LENGTH_SHORT)
+                .setAction("Undo") {
+                    Toast.makeText(this, "你点击了 snackbar", Toast.LENGTH_SHORT).show()
+                }
+                .show()
+        }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        initFruitList()
+        val layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = layoutManager
+        val fruitAdapter = FruitAdapter(this, fruitList)
+        recyclerView.adapter = fruitAdapter
     }
 
 
@@ -50,5 +97,14 @@ class MainActivity : AppCompatActivity() {
             R.id.settings -> Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show()
         }
         return true
+    }
+
+
+    private fun initFruitList() {
+        fruitList.clear()
+        repeat(50) {
+            val index = (0 until fruits.size).random()
+            fruitList.add(fruits[index])
+        }
     }
 }
