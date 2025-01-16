@@ -14,13 +14,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+
 
     val fruits = mutableListOf(
         Fruit("Apple", R.drawable.apple),
@@ -66,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        // 悬浮式按钮
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
 
             Snackbar.make(view, "数据删除", Snackbar.LENGTH_SHORT)
@@ -75,12 +81,32 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
 
+        // 卡片式布局
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         initFruitList()
         val layoutManager = GridLayoutManager(this, 2)
         recyclerView.layoutManager = layoutManager
         val fruitAdapter = FruitAdapter(this, fruitList)
         recyclerView.adapter = fruitAdapter
+
+
+        // 下拉刷新布局
+        swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        swipeRefresh.setOnRefreshListener {
+            refreshFruits(fruitAdapter)
+        }
+    }
+
+    private fun refreshFruits(fruitAdapter: FruitAdapter) {
+        thread {
+            Thread.sleep(2000)
+            runOnUiThread {
+                initFruitList()
+                fruitAdapter.notifyDataSetChanged()
+                swipeRefresh.isRefreshing = false
+            }
+        }
     }
 
 
