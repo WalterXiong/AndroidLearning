@@ -65,9 +65,7 @@ class MainActivity : AppCompatActivity() {
         navView.setCheckedItem(R.id.navCall)
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
-
             Toast.makeText(this, "你点击了 navView", Toast.LENGTH_SHORT).show()
-
             true
         }
 

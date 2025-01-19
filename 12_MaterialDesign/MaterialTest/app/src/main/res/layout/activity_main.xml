@@ -36,7 +36,6 @@
                     app:layout_scrollFlags="scroll|enterAlways|snap"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
