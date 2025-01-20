@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -36,6 +38,8 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.0-alpha08")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
