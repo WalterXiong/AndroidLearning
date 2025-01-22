@@ -32,6 +32,18 @@ class MainViewModel(countReserved: Int) : ViewModel() {
         userIdLiveData.value = userId
     }
 
+    // ===================================================================
+
+    private val refreshLiveData = MutableLiveData<Any?>()
+
+    val refreshResult: LiveData<Any?> = refreshLiveData.switchMap { refreshLiveData ->
+        Repository.refresh()
+    }
+
+    fun refresh() {
+        refreshLiveData.value = refreshLiveData.value
+    }
+
 
     // ==========================================================
     //
