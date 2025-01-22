@@ -15,6 +15,14 @@
         android:layout_gravity="center_horizontal"
         android:textSize="32sp" />
 
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="32sp" />
+
     <Button
         android:id="@+id/plusOneBtn"
         android:layout_width="match_parent"
@@ -28,5 +36,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="归 0" />
+
+
+    <Button
+        android:id="@+id/set100Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="设置 100" />
+
+    <Button
+        android:id="@+id/getUserBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Get User"/>
+
 
 </LinearLayout>

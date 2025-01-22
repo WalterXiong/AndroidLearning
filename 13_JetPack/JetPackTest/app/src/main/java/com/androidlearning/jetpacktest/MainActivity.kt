@@ -17,6 +17,7 @@ import com.androidlearning.jetpacktest.viewmodeltest.MainViewModelFactory
 class MainActivity : AppCompatActivity() {
 
     lateinit var infoText: TextView
+    lateinit var nameText: TextView
     lateinit var viewModel: MainViewModel
     lateinit var sp: SharedPreferences
 
@@ -32,8 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         infoText = findViewById<TextView>(R.id.infoText)
+        nameText = findViewById<TextView>(R.id.nameText)
         val plusOneBtn = findViewById<Button>(R.id.plusOneBtn)
         val clearBtn = findViewById<Button>(R.id.clearBtn)
+        val set100Btn = findViewById<Button>(R.id.set100Btn)
+        val getUserBtn = findViewById<Button>(R.id.getUserBtn)
 
         sp = getPreferences(MODE_PRIVATE)
         val countReserved = sp.getInt("count_reserved", 0)
@@ -47,8 +51,27 @@ class MainActivity : AppCompatActivity() {
         clearBtn.setOnClickListener {
             viewModel.clear()
         }
+
+        set100Btn.setOnClickListener {
+            viewModel.postSet(100)
+            viewModel.createUser()
+        }
+
+        getUserBtn.setOnClickListener {
+            val userId = (1..10000).random().toString()
+            viewModel.getUser(userId)
+        }
+
         viewModel.counter.observe(this) { count ->
             infoText.text = count.toString()
+        }
+
+        viewModel.userName.observe(this) { uName ->
+            nameText.text = uName.toString()
+        }
+
+        viewModel.user.observe(this) { user ->
+            infoText.text = user.firstName
         }
 
         lifecycle.addObserver(MyObserver(lifecycle))
