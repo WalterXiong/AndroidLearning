@@ -2,6 +2,7 @@ package com.androidlearning.jetpacktest
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -11,8 +12,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.core.content.edit
 import com.androidlearning.jetpacktest.lifecycles.MyObserver
+import com.androidlearning.jetpacktest.room.AppDatabase
+import com.androidlearning.jetpacktest.room.UserDao
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModel
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModelFactory
+import com.androidlearning.jetpacktest.viewmodeltest.User
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,6 +80,43 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycle.addObserver(MyObserver(lifecycle))
+
+        // =========================================================================================
+        //                       ROOM
+        // =========================================================================================
+
+        val userDao = AppDatabase.getDatabase(this).userDao()
+        val user1 = User("Tom", "Brady", 40)
+        val user2 = User("Tom", "Hanks", 63)
+
+        findViewById<Button>(R.id.addDataBtn).setOnClickListener {
+            thread {
+                user1.id = userDao.insertUser(user1)
+                user2.id = userDao.insertUser(user2)
+            }
+        }
+
+        findViewById<Button>(R.id.updateDataBtn).setOnClickListener {
+            thread {
+                user1.age = 42
+                userDao.updateUser(user1)
+            }
+        }
+
+        findViewById<Button>(R.id.deleteDataBtn).setOnClickListener {
+            thread {
+                userDao.deleteUserByLastName("Hanks")
+            }
+
+        }
+
+        findViewById<Button>(R.id.queryDataBtn).setOnClickListener {
+            thread {
+                for (user in userDao.queryAllUser()) {
+                    Log.d("MainActivity", user.toString())
+                }
+            }
+        }
     }
 
     override fun onPause() {
