@@ -1,4 +1,4 @@
-package com.androidlearning.jetpacktest.room
+package com.androidlearning.jetpacktest.roomtest
 
 import androidx.room.Dao
 import androidx.room.Delete

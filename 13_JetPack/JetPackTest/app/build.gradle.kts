@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -52,4 +50,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     // 可选，如果使用 Kotlin 协程则推荐添加
     implementation(libs.androidx.room.ktx)
+
+
+    // WordManager
+    implementation(libs.androidx.work.runtime.ktx)
 }

@@ -7,13 +7,12 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.core.content.edit
-import com.androidlearning.jetpacktest.lifecycles.MyObserver
-import com.androidlearning.jetpacktest.room.AppDatabase
-import com.androidlearning.jetpacktest.room.UserDao
+import com.androidlearning.jetpacktest.lifecyclestest.MyObserver
+import com.androidlearning.jetpacktest.roomtest.AppDatabase
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModel
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModelFactory
 import com.androidlearning.jetpacktest.viewmodeltest.User

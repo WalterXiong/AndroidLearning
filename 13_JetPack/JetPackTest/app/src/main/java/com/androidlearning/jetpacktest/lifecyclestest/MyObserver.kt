@@ -1,4 +1,4 @@
-package com.androidlearning.jetpacktest.lifecycles
+package com.androidlearning.jetpacktest.lifecyclestest
 
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver

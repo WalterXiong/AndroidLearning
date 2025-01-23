@@ -1,4 +1,4 @@
-package com.androidlearning.jetpacktest.room
+package com.androidlearning.jetpacktest.roomtest
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,5 +11,5 @@ interface BookDao {
     fun insertBook(book: Book): Long
 
     @Query("select * from Book")
-    fun loadAllBooks()
+    fun loadAllBooks(): List<Book>
 }
