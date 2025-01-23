@@ -3,6 +3,7 @@ import org.gradle.kotlin.dsl.implementation
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -45,4 +46,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // 添加 Room 依赖
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    // 可选，如果使用 Kotlin 协程则推荐添加
+    implementation(libs.androidx.room.ktx)
 }
