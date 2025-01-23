@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- 664  -->
+    <!-- 664 页  -->
 
     <TextView
         android:id="@+id/infoText"
