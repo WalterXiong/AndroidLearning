@@ -51,7 +51,6 @@ dependencies {
     // 可选，如果使用 Kotlin 协程则推荐添加
     implementation(libs.androidx.room.ktx)
 
-
     // WordManager
     implementation(libs.androidx.work.runtime.ktx)
 }

@@ -100,6 +100,12 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Query Data" />
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000" />
+
             <Button
                 android:id="@+id/doWorkBtn"
                 android:layout_width="match_parent"
@@ -107,9 +113,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="200dp"
                 android:text="Do Work" />
+
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>

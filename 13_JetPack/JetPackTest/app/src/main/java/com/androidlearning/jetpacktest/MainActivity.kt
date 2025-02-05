@@ -11,11 +11,17 @@ import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.BackoffPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.androidlearning.jetpacktest.lifecyclestest.MyObserver
 import com.androidlearning.jetpacktest.roomtest.AppDatabase
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModel
 import com.androidlearning.jetpacktest.viewmodeltest.MainViewModelFactory
 import com.androidlearning.jetpacktest.viewmodeltest.User
+import com.androidlearning.jetpacktest.workmanagertest.SimpleWork
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -115,6 +121,58 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MainActivity", user.toString())
                 }
             }
+        }
+
+        // =========================================================================================
+        //                       WorkManager
+        // =========================================================================================
+        findViewById<Button>(R.id.doWorkBtn).setOnClickListener {
+            // 最简单的任务
+            // val request = OneTimeWorkRequest.Builder(SimpleWork::class.java).build()
+
+            val request = OneTimeWorkRequest.Builder(SimpleWork::class.java)
+                // 让后台任务在指定的时间延迟后执行
+                .setInitialDelay(5, TimeUnit.MINUTES)
+                // 给后台任务添加标签
+                .addTag("simple")
+                /*
+                 * setBackoffCriteria()方法接收3个参数：
+                 * 第一个参数用于指定如果任务再次执行失败，下次重试的时间应该以什么样的形式延迟。
+                 * 第二个和第三个参数用于指定在多久之后重新执行任务，时间最短不能少于10秒钟；
+                 */
+                .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
+                .build()
+
+            // 通过标签停用所有打了该标签的任务
+            WorkManager.getInstance(this).cancelAllWorkByTag("simple")
+            // 通过 Id 停用该任务
+            WorkManager.getInstance(this).cancelWorkById(request.id)
+            // 停用所有后台任务
+            WorkManager.getInstance(this).cancelAllWork()
+
+            WorkManager.getInstance(this)
+                .getWorkInfoByIdLiveData(request.id)
+                .observe(this) { workInfo ->
+                    workInfo?.let {
+                        if (workInfo.state == WorkInfo.State.SUCCEEDED) {
+                            Log.d("MainActivity", "do work succeeded")
+                        } else if (workInfo.state == WorkInfo.State.FAILED) {
+                            Log.d("MainActivity", "do work failed")
+                        }
+                    }
+                }
+
+            /*
+             * 链式任务的执行
+             */
+            val sync = OneTimeWorkRequest.Builder(SimpleWork::class.java).build()
+            val compress = OneTimeWorkRequest.Builder(SimpleWork::class.java).build()
+            val upload = OneTimeWorkRequest.Builder(SimpleWork::class.java).build()
+            WorkManager.getInstance(this)
+                .beginWith(sync)
+                .then(compress)
+                .then(upload)
+                .enqueue()
         }
     }
 
