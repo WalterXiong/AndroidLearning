@@ -2,11 +2,15 @@ package com.androidlearning.a3_activitytest
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.androidlearning.a3_activitytest.BestActivityPrectice.BaseActivity
 
 class SecondActivity : BaseActivity() {
@@ -26,19 +30,21 @@ class SecondActivity : BaseActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
         Log.d("SecondActivity-s", "Task id is $taskId")
 
         setContentView(R.layout.second_laout)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+        /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+             insets
+         }*/
+
+        val person = intent.getSerializableExtra<Person>("person_data", Person::class.java)
+        val person1 = intent.getParcelableExtra<Person1>("person1_data", Person1::class.java)
 
         val extraData = intent.getStringExtra("扩展数据")
         Log.d("SecondActivity", "第一个 Activity 传过来的扩展数据是：$extraData")

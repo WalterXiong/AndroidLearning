@@ -83,10 +83,16 @@ class FirstActivity : BaseActivity() {
             // intent.putExtra("扩展数据", data)
             // resultLauncher.launch(intent)
 
+
+            val person = Person("xj", 29)
+            val person1 = Person("xx", 28)
+
             /**
              * 启动模式测试
              */
             val intent: Intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("person_data", person)
+            intent.putExtra("person1_data", person1)
             startActivity(intent)
 
 
