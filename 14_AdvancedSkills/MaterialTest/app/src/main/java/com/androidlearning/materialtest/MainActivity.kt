@@ -1,6 +1,6 @@
 package com.androidlearning.materialtest
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlin.concurrent.thread
+import android.content.res.Configuration
 
 class MainActivity : AppCompatActivity() {
 
@@ -131,4 +132,11 @@ class MainActivity : AppCompatActivity() {
             fruitList.add(fruits[index])
         }
     }
+
+    fun isDarkTheme(context: Context): Boolean {
+        val flag = context.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        return flag == Configuration.UI_MODE_NIGHT_YES
+    }
+
 }
