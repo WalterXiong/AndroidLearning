@@ -34,7 +34,7 @@ class NewsTitleFragment : Fragment() {
             val newsTitleRecyclerView: RecyclerView =
                 mainActivity.findViewById(R.id.newsTitleRecyclerView)
 
-            val layoutManager = LinearLayoutManager(activity)
+            val layoutManager = LinearLayoutManager(mainActivity)
 
             newsTitleRecyclerView.layoutManager = layoutManager
 
