@@ -40,9 +40,8 @@ class MainActivity : AppCompatActivity() {
             val appService = retrofit.create(AppService::class.java)
 
             appService.getAppData().enqueue(object : Callback<List<App>> {
-                override fun onResponse(
-                    p0: Call<List<App>?>, p1: Response<List<App>?>
-                ) {
+
+                override fun onResponse(p0: Call<List<App>?>, p1: Response<List<App>?>) {
                     p1.body()?.let {
                         for (app in it) {
                             Log.d("MainActivity", "id is ${app.id}")
