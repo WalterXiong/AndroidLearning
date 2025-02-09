@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerLayout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -62,13 +62,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val navView = findViewById<NavigationView>(R.id.navView)
+/*        val navView = findViewById<NavigationView>(R.id.navView)
         navView.setCheckedItem(R.id.navCall)
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
             Toast.makeText(this, "你点击了 navView", Toast.LENGTH_SHORT).show()
             true
-        }
+        }*/
 
         // 悬浮式按钮
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
