@@ -20,6 +20,12 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlin.concurrent.thread
 import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
+import android.view.View
+import android.view.WindowManager
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,13 +68,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-/*        val navView = findViewById<NavigationView>(R.id.navView)
+        val navView = findViewById<NavigationView>(R.id.navView)
         navView.setCheckedItem(R.id.navCall)
         navView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
             Toast.makeText(this, "你点击了 navView", Toast.LENGTH_SHORT).show()
             true
-        }*/
+        }
 
         // 悬浮式按钮
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
