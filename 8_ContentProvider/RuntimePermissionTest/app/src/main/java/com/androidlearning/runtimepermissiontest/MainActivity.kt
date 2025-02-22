@@ -28,17 +28,11 @@ class MainActivity : AppCompatActivity() {
         val makeCall: Button = findViewById(R.id.makeCall)
         makeCall.setOnClickListener {
 
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CALL_PHONE
-                )
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED
             ) {
                 // 如果没有权限，则请求用户授权
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.CALL_PHONE), 1
-                )
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), 1)
             } else {
                 // 已经拥有权限，可以直接拨打电话 makePhoneCall();
                 call()
