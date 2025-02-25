@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.androidlearning.flowtest.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -40,28 +43,33 @@ class SharedFlowMainActivity : AppCompatActivity() {
         button.setOnClickListener {
 
             // 由于 collect 是一个挂起函数，所以只能在协程作用域中才能运行
+            /**
+             * 粘性 flow
+             */
+            /*lifecycleScope.launch {
+
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                    mainViewModel.clickCountFlow.collect { item ->
+                        textView.text = it.toString()
+                    }
+                }
+            }*/
+
+            /**
+             * 非粘性 flow
+             */
             lifecycleScope.launch {
-
-                // 只要调用了collect函数之后就相当于进入了一个死循环，它的下一行代码是永远都不会执行到的。
-                // 因此，如果你的代码中有多个Flow需要collect，正确的写法应该是借助launch函数再启动子协程去collect，这样不同子协程之间就互不影响了
-                launch {
-                    mainViewModel.timeFlow.collect { time ->
-                        textView.text = time.toString()
-                        Log.d("FlowTest", "Update time $time in UI.")
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mainViewModel.loginFlow.collectLatest { item ->
+                        if (item.isNotBlank()) {
+                            Toast
+                                .makeText(this@SharedFlowMainActivity, item, Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                 }
-
-                launch {
-                    // 流速不均匀问题，使用 collectLatest
-                    mainViewModel.timeFlow.collectLatest { time ->
-                        textView.text = time.toString()
-                        delay(3000)
-                        Log.d("FlowTest", "Update time $time in UI.")
-                    }
-                }
-
             }
-
 
         }
     }

@@ -2,7 +2,6 @@ package com.androidlearning.flowtest
 
 import android.os.Bundle
 import android.util.Log
-import android.util.Log.d
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge

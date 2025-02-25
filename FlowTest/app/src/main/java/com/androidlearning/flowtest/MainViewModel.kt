@@ -1,6 +1,5 @@
 package com.androidlearning.flowtest
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
